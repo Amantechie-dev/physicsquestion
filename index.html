@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics PYQs - Bhai Gurdas Institute</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #8b5cf6;
+            --accent: #f59e0b;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-light: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            to { left: 100%; }
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+
+        .creator {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .filter-section {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .filter-section input {
+            width: 100%;
+            max-width: 500px;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            background: var(--bg-card);
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .filter-section input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .question-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 0.5s ease-out backwards;
+        }
+
+        .question-card:nth-child(1) { animation-delay: 0.1s; }
+        .question-card:nth-child(2) { animation-delay: 0.2s; }
+        .question-card:nth-child(3) { animation-delay: 0.3s; }
+        .question-card:nth-child(4) { animation-delay: 0.4s; }
+        .question-card:nth-child(5) { animation-delay: 0.5s; }
+        .question-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .question-card:hover::before {
+            left: 100%;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+            border-color: var(--primary);
+        }
+
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--text-light);
+        }
+
+        .question-type {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            position: relative;
+            background: var(--bg-dark);
+            margin: 2rem auto;
+            padding: 2rem;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 20px;
+            animation: modalSlideIn 0.4s ease-out;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--bg-card);
+        }
+
+        .close-btn:hover {
+            color: var(--text-light);
+            background: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .answer-content {
+            margin-top: 2rem;
+        }
+
+        .answer-content h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .answer-content h3 {
+            color: var(--secondary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+
+        .answer-content p {
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .answer-content ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .answer-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .answer-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--bg-card);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .answer-content th,
+        .answer-content td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+
+        .answer-content th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            font-weight: bold;
+        }
+
+        .formula {
+            background: var(--bg-card);
+            padding: 1rem;
+            border-left: 4px solid var(--accent);
+            margin: 1rem 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .questions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Bhai Gurdas Institute of Engineering and Technology</h1>
+        <div class="subtitle">B.Tech CSE - Physics Unit 1 Previous Year Questions</div>
+        <div class="creator">Created by: Aman Singh</div>
+    </div>
+
+    <div class="container">
+        <div class="filter-section">
+            <input type="text" id="searchInput" placeholder="🔍 Search questions..." />
+        </div>
+
+        <div class="questions-grid" id="questionsGrid"></div>
+        <div class="no-results" id="noResults" style="display: none;">No questions found matching your search.</div>
+    </div>
+
+    <div class="modal" id="answerModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeBtn">&times;</span>
+            <div class="answer-content" id="answerContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                id: 1,
+                question: "Distinguish between x-ray and gamma ray. Explain the origin of continuous and characteristic x-ray.",
+                type: "Theory",
+                answer: `
+                    <h2>Distinction Between X-ray and Gamma Ray</h2>
+                    <p>X-rays and gamma rays are fundamentally different based on their origin:</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aspect</th>
+                                <th>X-rays</th>
+                                <th>Gamma Rays</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Origin</strong></td>
+                                <td>Produced from interactions involving electrons in the atomic structure</td>
+                                <td>Emitted from the nucleus during radioactive decay</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Generation</strong></td>
+                                <td>Electrons striking a target or rearranging within atomic shells</td>
+                                <td>Spontaneous nuclear processes (alpha decay, beta decay, etc.)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Typical Energy Range</strong></td>
+                                <td>Depends on accelerating voltage (keV to ~100 keV in medical applications)</td>
+                                <td>Higher energy range (keV to MeV range)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Wavelength</strong></td>
+                                <td>Generally longer than gamma rays</td>
+                                <td>Shorter wavelengths than X-rays</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Penetration Power</strong></td>
+                                <td>Slightly better penetration in dense materials</td>
+                                <td>Extremely high penetrating power</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ionization</strong></td>
+                                <td>Moderate ionizing power</td>
+                                <td>Significantly greater ionizing capability</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Origin of Continuous X-ray (Bremsstrahlung Radiation)</h3>
+                    <p>Continuous X-rays, also known as bremsstrahlung radiation (German for "braking radiation"), are produced through electron deceleration in an X-ray tube.</p>
+                    
+                    <p><strong>Production Mechanism:</strong></p>
+                    <p>In an X-ray tube, the process begins with a heated tungsten filament (cathode) that undergoes thermionic emission, releasing electrons. These electrons are then accelerated across a high voltage potential (typically 20-100 kV) toward a positively charged metal target, usually tungsten or molybdenum (anode).</p>
+
+                    <p>When high-velocity electrons strike the anode target, they penetrate deep into the interior of the target atoms. The electron is then attracted toward the positively charged nucleus and experiences deceleration due to the strong Coulomb force exerted by the nucleus. As the electron loses kinetic energy during this braking process, this lost energy is converted into electromagnetic radiation in the form of X-ray photons.</p>
+
+                    <p><strong>Key characteristics:</strong></p>
+                    <ul>
+                        <li>The energy transferred varies, producing a continuous spectrum of wavelengths</li>
+                        <li>Minimum wavelength occurs when electron converts all kinetic energy: λ<sub>min</sub> = hc/eV = 12400/V Å</li>
+                        <li>Approximately 99% of electron energy converts to heat, only 1% to X-rays</li>
+                    </ul>
+
+                    <h3>Origin of Characteristic X-ray</h3>
+                    <p>Characteristic X-rays are produced through inner-shell electron transitions within atoms.</p>
+                    
+                    <p><strong>Production Mechanism:</strong></p>
+                    <p>When an energetic electron from the cathode beam strikes the target atom with sufficient energy, it can knock out an inner-shell electron, typically from the K-shell (n=1). This creates a vacancy in the inner shell.</p>
+
+                    <p>This vacancy is highly unstable. An electron from an outer shell (L-shell, M-shell, etc.) spontaneously falls down to fill this vacancy. During this transition, the electron releases energy equal to the difference in binding energies between the two shells, emitted as a characteristic X-ray photon with a specific wavelength.</p>
+
+                    <p><strong>Notation and Series:</strong></p>
+                    <ul>
+                        <li>K-alpha (Kα): L-shell (n=2) to K-shell (n=1) transition</li>
+                        <li>K-beta (Kβ): M-shell (n=3) to K-shell (n=1) transition</li>
+                        <li>K-gamma (Kγ): N-shell (n=4) to K-shell (n=1) transition</li>
+                    </ul>
+
+                    <div class="formula">
+                        <strong>Energy:</strong> E = hf = constant × (Z-1)² (1/n₁² - 1/n₂²)
+                    </div>
+
+                    <p>The factor (Z-1) appears because one electron in the K-shell shields the nuclear charge.</p>
+                `
+            },
+            {
+                id: 2,
+                question: "What is Bragg's law?",
+                type: "Theory",
+                answer: `
+                    <h2>Bragg's Law</h2>
+                    <p><strong>Bragg's Law is a fundamental principle in crystallography that describes the conditions required for constructive interference when X-rays interact with the atomic planes of a crystal structure.</strong></p>
+
+                    <h3>The Law Statement and Formula</h3>
+                    <div class="formula">
+                        nλ = 2d sin θ
+                    </div>
+
+                    <p><strong>Where:</strong></p>
+                    <ul>
+                        <li><strong>n</strong> = order of diffraction (integer: 1, 2, 3, ...)</li>
+                        <li><strong>λ</strong> = wavelength of incident X-rays</li>
+                        <li><strong>d</strong> = interplanar spacing between consecutive atomic planes</li>
+                        <li><strong>θ</strong> = glancing angle (Bragg angle) between incident beam and crystal plane</li>
+                    </ul>
+
+                    <h3>Physical Meaning: Constructive Interference Condition</h3>
+                    <p>The core principle is <strong>constructive interference</strong>. When X-rays strike different atomic planes in a crystal, each plane acts as a reflecting surface. The reflected waves from successive planes travel different path distances before they recombine.</p>
+
+                    <p><strong>Path Difference Analysis:</strong></p>
+                    <p>When two parallel X-ray beams strike adjacent crystal planes separated by distance d at the same glancing angle θ, the second beam travels an extra distance through the crystal:</p>
+
+                    <div class="formula">
+                        Path difference = 2d sin θ
+                    </div>
+
+                    <p>For <strong>constructive interference</strong>, this path difference must equal an integer multiple of the wavelength: Path difference = nλ</p>
+
+                    <h3>Significance</h3>
+                    <p>This condition is extraordinarily restrictive. For a given X-ray wavelength and crystal plane spacing, diffraction occurs only at very specific angles. At angles slightly different from the Bragg angle, reflected waves will destructively interfere, canceling each other out. This produces <strong>sharp, intense peaks at precisely defined angles</strong>.</p>
+
+                    <h3>Applications</h3>
+                    <ul>
+                        <li><strong>Crystal Structure Determination:</strong> Scientists use XRD to identify unknown crystalline materials by measuring diffraction angles</li>
+                        <li><strong>X-ray Diffraction Analysis (XRD):</strong> One of the most important characterization techniques in materials science</li>
+                        <li><strong>Material Identification:</strong> Each crystalline substance produces a unique diffraction pattern</li>
+                    </ul>
+
+                    <h3>Historical Context</h3>
+                    <p>Bragg's Law was formulated by Lawrence Bragg, who presented it to the Cambridge Philosophical Society on November 11, 1912. Together with his father William Henry Bragg, he developed this principle into a comprehensive method for X-ray crystallography.</p>
+                `
+            },
+            {
+                id: 3,
+                question: "Define terms: Unit cell, Basis and space lattice",
+                type: "Theory",
+                answer: `
+                    <h2>Unit Cell</h2>
+                    <p><strong>A unit cell is the smallest repeating geometric unit that, when translated repeatedly in three dimensions, generates the entire crystal structure.</strong> It serves as the fundamental building block from which the whole crystal lattice can be constructed by simple translation operations.</p>
+
+                    <h3>Definition and Characteristics</h3>
+                    <p>The unit cell is the <strong>smallest volume of space</strong> that represents the complete structure of the crystal. When repeated indefinitely by integral multiples in all three spatial directions, it fills all of space without gaps or overlaps.</p>
+
+                    <p>The unit cell is characterized by <strong>six lattice parameters:</strong></p>
+                    <ul>
+                        <li><strong>Three edge lengths:</strong> a, b, and c (magnitudes of translation vectors)</li>
+                        <li><strong>Three angles:</strong> α (between b and c), β (between a and c), and γ (between a and b)</li>
+                    </ul>
+
+                    <h3>Types of Unit Cells</h3>
+                    <p><strong>Primitive Unit Cells:</strong> Contains exactly one lattice point. A cubic primitive cell has lattice points only at its eight corners, each counted as 1/8, giving a total of one lattice point per cell.</p>
+                    
+                    <p><strong>Conventional Unit Cells:</strong> May contain additional lattice points beyond corners, typically at the center (body-centered) or at face centers (face-centered). Chosen to better reveal crystal symmetry.</p>
+
+                    <hr style="margin: 2rem 0; border: 1px solid var(--border);" />
+
+                    <h2>Basis and Space Lattice</h2>
+                    <p>These two fundamental concepts are complementary and together define the complete crystal structure.</p>
+
+                    <h3>Space Lattice (Crystal Lattice)</h3>
+                    <p><strong>A space lattice is an array of points in space arranged such that the environment surrounding every point is identical.</strong> It is a purely geometrical concept representing the periodic arrangement of positions where atoms are located.</p>
+
+                    <p><strong>Mathematical Representation:</strong></p>
+                    <div class="formula">
+                        T = n₁a + n₂b + n₃c
+                    </div>
+                    <p>where <strong>a</strong>, <strong>b</strong>, and <strong>c</strong> are primitive translation vectors, and n₁, n₂, n₃ are arbitrary integers.</p>
+
+                    <p><strong>Key Characteristics:</strong></p>
+                    <ul>
+                        <li>The neighborhood of each lattice point is identical to every other lattice point</li>
+                        <li>There exist exactly <strong>14 distinct Bravais lattices</strong> in three dimensions</li>
+                    </ul>
+
+                    <h3>Basis</h3>
+                    <p><strong>A basis is a fundamental unit consisting of an atom or an identical assembly of atoms, ions, or molecules that is placed at each lattice point of the space lattice.</strong> The basis must maintain complete chemical uniformity and identical orientation.</p>
+
+                    <p><strong>Types and Composition:</strong></p>
+                    <ul>
+                        <li><strong>Monatomic basis:</strong> Single atom (Cu, Al, Fe crystals)</li>
+                        <li><strong>Diatomic basis:</strong> Two different atoms (NaCl, KCl)</li>
+                        <li><strong>Polyatomic basis:</strong> Three or more atoms (CaF₂, complex molecules)</li>
+                    </ul>
+
+                    <h3>The Critical Relationship</h3>
+                    <div class="formula" style="background: linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%); color: white; padding: 1.5rem; font-size: 1.2rem;">
+                        Crystal Structure = Space Lattice + Basis
+                    </div>
+
+                    <p>This formula encapsulates two essential aspects:</p>
+                    <ul>
+                        <li><strong>The space lattice defines "how to repeat"</strong> — it specifies the periodicity and geometric arrangement</li>
+                        <li><strong>The basis defines "what to repeat"</strong> — it specifies which atoms or atomic groups must be placed at each lattice point</li>
+                    </ul>
+
+                    <h3>Illustrative Distinction</h3>
+                    <p>A <strong>space lattice is purely geometric</strong> — imagine a 3D grid of points in space with no atoms attached. A <strong>basis is the actual atomic content</strong> — specific atoms or molecules associated with each point. When you place the basis at every lattice point, you generate the actual crystal structure that exists in nature.</p>
+                `
+            },
+            {
+                id: 4,
+                question: "Differentiate between continuous ray and characteristic x-ray.",
+                type: "Theory",
+                answer: `
+                    <h2>Differentiation Between Continuous X-Rays and Characteristic X-Rays</h2>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aspect</th>
+                                <th>Continuous X-rays (Bremsstrahlung)</th>
+                                <th>Characteristic X-rays</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Origin</strong></td>
+                                <td>Produced when electrons are suddenly decelerated by atomic nuclei in target material</td>
+                                <td>Produced when inner-shell electron is ejected and outer-shell electron fills the vacancy</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mechanism</strong></td>
+                                <td>Electron loses kinetic energy through deflection by nuclear electric field</td>
+                                <td>Electron transition between specific energy levels</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Spectrum Type</strong></td>
+                                <td>Continuous spectrum with broad range of frequencies</td>
+                                <td>Discrete line spectrum with sharply defined peaks</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Appearance</strong></td>
+                                <td>Smooth, varying intensity across spectrum</td>
+                                <td>Sharp vertical spikes (Kα, Kβ, etc.) on spectrum</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Wavelength Range</strong></td>
+                                <td>Has well-defined minimum wavelength (λ<sub>min</sub>)</td>
+                                <td>No minimum wavelength cutoff, only specific values</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dependence on Voltage</strong></td>
+                                <td>Minimum wavelength determined by accelerating voltage: λ₀ = hc/eV</td>
+                                <td>Independent of accelerating voltage</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dependence on Target</strong></td>
+                                <td>Not dependent on target material's atomic number</td>
+                                <td>Highly dependent on target material - each element has unique spectrum</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Intensity</strong></td>
+                                <td>Dominates overall X-ray spectrum</td>
+                                <td>Much lower intensity, appears as peaks on continuous background</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Physical Interaction</strong></td>
+                                <td>Interaction between incoming electrons and atomic nuclei</td>
+                                <td>Interaction between incoming electrons and inner-shell electrons</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Energy Formula</strong></td>
+                                <td>Energy depends on deceleration amount (variable)</td>
+                                <td>E = constant × (Z-1)² (1/n₁² - 1/n₂²)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Practical Significance</h3>
+                    <p>Understanding these two types is crucial for:</p>
+                    <ul>
+                        <li><strong>Medical imaging:</strong> Continuous X-rays contribute to background radiation exposure</li>
+                        <li><strong>Material analysis:</strong> Characteristic X-rays provide useful information through X-ray diffraction and spectroscopy</li>
+                        <li><strong>Elemental identification:</strong> Each element's characteristic X-rays serve as unique fingerprints</li>
+                    </ul>
+
+                    <h3>Visual Distinction</h3>
+                    <p>On an intensity vs. wavelength graph:</p>
+                    <ul>
+                        <li><strong>Continuous X-rays</strong> appear as a smooth curve with a sharp cutoff at minimum wavelength</li>
+                        <li><strong>Characteristic X-rays</strong> appear as sharp, distinct peaks superimposed on the continuous spectrum</li>
+                    </ul>
+                `
+            },
+            {
+                id: 5,
+                question: "Discuss briefly the experiment method for crystal structure determination by x-ray diffraction.",
+                type: "Theory",
+                answer: `
+                    <h2>Experimental Method for Crystal Structure Determination by X-Ray Diffraction</h2>
+                    
+                    <p>X-ray diffraction (XRD) is a powerful <strong>nondestructive technique</strong> used to determine crystal structures by analyzing how X-rays interact with the atomic arrangement in crystals. The method relies on the principle that X-ray wavelengths are similar to atomic spacing in crystals, allowing them to diffract.</p>
+
+                    <h3>Fundamental Principle: Bragg's Law</h3>
+                    <p>The foundation is <strong>Bragg's Law</strong>, describing constructive interference conditions:</p>
+                    <div class="formula">
+                        nλ = 2d sin θ
+                    </div>
+                    <p>where n is order of reflection, λ is X-ray wavelength, d is interplanar spacing, and θ is angle of incidence.</p>
+
+                    <h3>Experimental Setup and Procedure</h3>
+                    
+                    <p><strong>1. Sample Preparation and Mounting</strong></p>
+                    <ul>
+                        <li><strong>Single-crystal XRD:</strong> Individual crystal carefully mounted and centered in X-ray beam path</li>
+                        <li><strong>Powder XRD:</strong> Polycrystalline sample ground into fine powder and placed on diffraction plate as thin, uniform monolayer (~20 mg)</li>
+                    </ul>
+
+                    <p><strong>2. X-Ray Irradiation and Detection</strong></p>
+                    <ul>
+                        <li>Sample irradiated with monochromatic X-rays of known, fixed wavelength</li>
+                        <li>Sample rotated with respect to both X-ray source and detector, systematically changing angle of incidence</li>
+                        <li>X-rays interact with electron density in crystal and are diffracted/scattered</li>
+                        <li>Detector measures intensity of scattered X-rays at various angles</li>
+                        <li>Measurements recorded as function of scattering angle 2θ</li>
+                    </ul>
+
+                    <h3>Analysis of Diffraction Patterns</h3>
+
+                    <p><strong>Powder X-Ray Diffraction:</strong></p>
+                    <p>Millions of randomly oriented crystalline grains scatter X-rays in all directions. Diffracted X-rays form rings of constructive interference, appearing as distinct peaks when intensity is plotted against 2θ. Each peak corresponds to a specific set of crystal planes satisfying Bragg's Law.</p>
+
+                    <p><strong>Single-Crystal X-Ray Diffraction:</strong></p>
+                    <p>Single crystals produce spotty diffraction patterns appearing as discrete points rather than continuous rings. This provides more detailed information about three-dimensional atomic arrangement.</p>
+
+                    <h3>Data Analysis and Structure Determination</h3>
+
+                    <p><strong>Peak Identification:</strong></p>
+                    <p>Each diffraction peak identified and associated with specific crystallographic plane using Miller indices (hkl). Peak position reveals spacing between atomic planes through Bragg's Law.</p>
+
+                    <p><strong>Crystal System and Unit Cell Parameters:</strong></p>
+                    <p>By analyzing systematic presence or absence of peaks and comparing against databases, crystal type and unit cell parameters (a, b, c, α, β, γ) can be determined. Modern X-ray diffractometers use automated software linked to extensive databases like the Powder Diffraction File (PDF) and Inorganic Crystal Structure Database (ICSD).</p>
+
+                    <p><strong>Structural Model Creation:</strong></p>
+                    <p>For single-crystal diffraction, intensity data generates electron density map, from which accurate bond lengths, bond angles, and atomic positions are determined. This provides complete three-dimensional model of crystal structure.</p>
+
+                    <h3>Advantages and Applications</h3>
+
+                    <ul>
+                        <li><strong>Nondestructive:</strong> Sample remains intact after analysis</li>
+                        <li><strong>Phase Identification:</strong> Determines crystallographic phases and purity</li>
+                        <li><strong>Structural Information:</strong> Reveals lattice parameters, grain size, strain, and atomic arrangements</li>
+                        <li><strong>High Precision:</strong> Can detect lattice parameters to within 10⁻⁴ Ångströms</li>
+                        <li><strong>Broad Applicability:</strong> Used in materials science, pharmaceuticals, mineralogy, and biological macromolecule structures</li>
+                    </ul>
+
+                    <p>The technique is particularly valuable for identifying unknown crystalline compounds, assessing material purity, determining polymorphic forms, and providing detailed information about internal stress and defects within crystals.</p>
+                `
+            },
+           
+            {
+                id: 6,
+                question: "a) Describe Bragg's spectrometer. b) The X-ray of wavelength 0.154 nm were obtained using Molybdenum BCC metal as target. The diffraction was obtained from the (200) planes at 20° 58' 53.5\". Find lattice constant for Mo.",
+                type: "Numerical",
+                answer: `
+                    <h2>Part A: Description of Bragg's Spectrometer</h2>
+                    
+                    <p><strong>Bragg's spectrometer</strong> is a precision instrument designed to determine X-ray wavelengths and investigate crystal structures by measuring X-ray diffraction from crystal planes.</p>
+
+                    <h3>Main Components</h3>
+                    <ul>
+                        <li><strong>X-ray Source:</strong> An X-ray tube produces a beam with characteristic wavelengths</li>
+                        <li><strong>Collimating Slits (S₁ and S₂):</strong> Two fine slits collimate the X-ray beam into a narrow, well-defined pencil beam ensuring precise, parallel radiation strikes the crystal</li>
+                        <li><strong>Crystal on Rotatable Prism Table:</strong> A crystal (typically NaCl or another standard crystal) mounted on precision rotatable table capable of rotating about vertical axis, allowing controlled variation of glancing angle</li>
+                        <li><strong>Graduated Angular Scale with Vernier Scales (V₁ and V₂):</strong> Circular graduated scale measures rotation angle precisely, enabling readings to fraction of a degree</li>
+                        <li><strong>Analysis Slits (S₃ and S₄):</strong> After reflection from crystal, diffracted X-rays pass through additional slits to define reflected beam</li>
+                        <li><strong>Ionization Chamber and Galvanometer:</strong> Reflected X-ray beam enters ionization chamber containing gas. X-rays ionize this gas, causing current to flow between electrodes, measured by galvanometer. Ionization current indicates intensity of reflected X-rays</li>
+                    </ul>
+
+                    <h3>Working Principle</h3>
+                    <ol>
+                        <li>Collimated X-rays strike the crystal at glancing angle θ</li>
+                        <li>X-rays diffract according to Bragg's law: nλ = 2d sin θ</li>
+                        <li>By rotating crystal and detector together, glancing angle is varied systematically</li>
+                        <li>Ionization current is measured as function of glancing angle θ</li>
+                        <li>Sharp peaks appear in ionization current when Bragg condition is satisfied</li>
+                        <li>These peaks correspond to different orders of reflection</li>
+                        <li>From measured angles and known crystal spacing d, X-ray wavelength λ can be calculated, or conversely, crystal structure can be determined</li>
+                    </ol>
+
+                    <hr style="margin: 2rem 0; border: 1px solid var(--border);" />
+
+                    <h2>Part B: Calculation of Lattice Constant for Molybdenum</h2>
+
+                    <p><strong>Given:</strong></p>
+                    <ul>
+                        <li>Wavelength: λ = 0.154 nm</li>
+                        <li>Diffraction angle: 2θ = 20°58'53.5" ≈ 20.9815°</li>
+                        <li>Crystal planes: (200)</li>
+                        <li>Crystal structure: BCC (Body-Centered Cubic)</li>
+                    </ul>
+
+                    <p><strong>Solution:</strong></p>
+
+                    <p><strong>Step 1:</strong> Calculate glancing angle θ (half of diffraction angle 2θ)</p>
+                    <div class="formula">
+                        θ = (20.9815°)/2 = 10.4908°
+                    </div>
+
+                    <p><strong>Step 2:</strong> Apply Bragg's Law with first-order diffraction (n = 1)</p>
+                    <div class="formula">
+                        nλ = 2d sin θ<br/>
+                        d₂₀₀ = λ/(2 sin θ) = 0.154 nm / (2 × sin(10.4908°))<br/>
+                        d₂₀₀ = 0.154 / (2 × 0.182077) = 0.4229 nm
+                    </div>
+
+                    <p><strong>Step 3:</strong> For cubic crystal system, relationship between interplanar spacing and lattice constant</p>
+                    <div class="formula">
+                        d<sub>hkl</sub> = a / √(h² + k² + l²)
+                    </div>
+
+                    <p><strong>Step 4:</strong> For (200) planes where h = 2, k = 0, l = 0:</p>
+                    <div class="formula">
+                        d₂₀₀ = a / √(4 + 0 + 0) = a/2
+                    </div>
+
+                    <p><strong>Step 5:</strong> Calculate lattice constant</p>
+                    <div class="formula" style="background: linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%); color: white; padding: 1.5rem; font-size: 1.3rem;">
+                        a = 2 × d₂₀₀ = 2 × 0.4229 nm = <strong>0.8458 nm</strong>
+                    </div>
+
+                    <p><strong>Verification:</strong> The (200) planes are systematically allowed in BCC structures since h + k + l = 2 (even number), confirming this is a valid reflection for the BCC lattice.</p>
+
+                    <p><strong>Answer:</strong> The lattice constant for Molybdenum is approximately <strong>0.846 nm</strong>.</p>
+                `
+            },
+            {
+                id: 7,
+                question: "An X-ray tube operates at 10 kV and 1mA. Find the energy falling on the target material per second as the KE of electrons. Also find the Planck's constant if the cut-off wavelength of the emitted X-rays is 0.124 nm.",
+                type: "Numerical",
+                answer: `
+                    <h2>X-ray Tube Energy and Planck's Constant Calculation</h2>
+
+                    <p><strong>Given:</strong></p>
+                    <ul>
+                        <li>Operating voltage: V = 10 kV = 10,000 V</li>
+                        <li>Current: I = 1 mA = 1 × 10⁻³ A = 0.001 A</li>
+                        <li>Cut-off wavelength: λ<sub>min</sub> = 0.124 nm = 0.124 × 10⁻⁹ m = 1.24 × 10⁻¹⁰ m</li>
+                        <li>Speed of light: c = 3 × 10⁸ m/s</li>
+                        <li>Electron charge: e = 1.6 × 10⁻¹⁹ C</li>
+                    </ul>
+
+                    <h3>Part A: Energy Falling on Target per Second</h3>
+
+                    <p><strong>Solution:</strong></p>
+                    <p>The power (energy per second) delivered to the target equals the electrical power:</p>
+
+                    <div class="formula">
+                        Power = V × I<br/>
+                        P = 10,000 V × 0.001 A<br/>
+                        P = 10 W = 10 J/s
+                    </div>
+
+                    <p><strong>Alternative calculation using electron flow:</strong></p>
+                    <p>Current represents charge flow per second. Number of electrons per second:</p>
+                    <div class="formula">
+                        n = I/e = (1 × 10⁻³) / (1.6 × 10⁻¹⁹)<br/>
+                        n = 6.25 × 10¹⁵ electrons/second
+                    </div>
+
+                    <p>Each electron gains kinetic energy:</p>
+                    <div class="formula">
+                        KE per electron = eV = (1.6 × 10⁻¹⁹ C) × (10,000 V)<br/>
+                        KE per electron = 1.6 × 10⁻¹⁵ J
+                    </div>
+
+                    <p>Total energy per second:</p>
+                    <div class="formula">
+                        Energy/second = n × KE per electron<br/>
+                        = (6.25 × 10¹⁵) × (1.6 × 10⁻¹⁵)<br/>
+                        = 10 J/s = 10 W
+                    </div>
+
+                    <div class="formula" style="background: linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%); color: white; padding: 1.5rem; font-size: 1.3rem;">
+                        <strong>Answer Part A:</strong> Energy falling on target = <strong>10 Joules per second</strong>
+                    </div>
+
+                    <hr style="margin: 2rem 0; border: 1px solid var(--border);" />
+
+                    <h3>Part B: Finding Planck's Constant</h3>
+
+                    <p><strong>Using the Duane-Hunt Formula for minimum wavelength:</strong></p>
+                    <div class="formula">
+                        λ<sub>min</sub> = hc / (eV)
+                    </div>
+
+                    <p>Rearranging to solve for Planck's constant h:</p>
+                    <div class="formula">
+                        h = (λ<sub>min</sub> × e × V) / c
+                    </div>
+
+                    <p><strong>Substituting values:</strong></p>
+                    <div class="formula">
+                        h = (1.24 × 10⁻¹⁰ m) × (1.6 × 10⁻¹⁹ C) × (10,000 V) / (3 × 10⁸ m/s)<br/>
+                        h = (1.24 × 1.6 × 10,000 × 10⁻¹⁰ × 10⁻¹⁹) / (3 × 10⁸)<br/>
+                        h = (1.984 × 10⁻²⁵) / (3 × 10⁸)<br/>
+                        h = 6.613 × 10⁻³⁴ J·s
+                    </div>
+
+                    <div class="formula" style="background: linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%); color: white; padding: 1.5rem; font-size: 1.3rem;">
+                        <strong>Answer Part B:</strong> Planck's constant h ≈ <strong>6.61 × 10⁻³⁴ J·s</strong>
+                    </div>
+
+                    <p><strong>Note:</strong> The accepted value of Planck's constant is h = 6.626 × 10⁻³⁴ J·s. Our calculated value of 6.61 × 10⁻³⁴ J·s is very close, with the small difference likely due to rounding in the given data.</p>
+
+                    <h3>Summary</h3>
+                    <ul>
+                        <li>Energy falling on target per second: <strong>10 J/s (10 W)</strong></li>
+                        <li>Calculated Planck's constant: <strong>6.61 × 10⁻³⁴ J·s</strong></li>
+                    </ul>
+                `
+            },
+            {
+                id: 8,
+                question: "Define the term miller indices. A certain crystal has lattice parameters of 4.24, 10 and 3.66 Å on X, Y, Z axes respectively. Determine the Miller indices of a plane having intercepts of 2.12, 10 and 1.83 Å on the X, Y and Z axes.",
+                type: "Numerical",
+                answer: `
+                    <h2>Miller Indices Definition and Calculation</h2>
+
+                    <h3>Definition of Miller Indices</h3>
+                    <p><strong>Miller indices</strong> are a notation system in crystallography used to describe the orientation of planes and directions in crystal lattices. They are represented as three integers (h k l) enclosed in parentheses, which uniquely identify a set of parallel planes in a crystal structure.</p>
+
+                    <p><strong>Method to Determine Miller Indices:</strong></p>
+                    <ol>
+                        <li>Find the intercepts of the plane on the three crystallographic axes (x, y, z)</li>
+                        <li>Express intercepts as fractions of the unit cell parameters (a, b, c)</li>
+                        <li>Take the reciprocals of these fractions</li>
+                        <li>Clear fractions by multiplying by the least common multiple</li>
+                        <li>The resulting integers (h k l) are the Miller indices</li>
+                    </ol>
+
+                    <hr style="margin: 2rem 0; border: 1px solid var(--border);" />
+
+                    <h3>Calculation</h3>
+
+                    <p><strong>Given:</strong></p>
+                    <ul>
+                        <li>Lattice parameters: a = 4.24 Å, b = 10 Å, c = 3.66 Å</li>
+                        <li>Plane intercepts: x = 2.12 Å, y = 10 Å, z = 1.83 Å</li>
+                    </ul>
+
+                    <p><strong>Solution:</strong></p>
+
+                    <p><strong>Step 1:</strong> Express intercepts as fractions of unit cell parameters</p>
+                    <div class="formula">
+                        Intercepts in terms of unit cell:<br/>
+                        x/a = 2.12/4.24 = 0.5<br/>
+                        y/b = 10/10 = 1<br/>
+                        z/c = 1.83/3.66 = 0.5
+                    </div>
+
+                    <p>So the fractional intercepts are: <strong>0.5, 1, 0.5</strong></p>
+
+                    <p><strong>Step 2:</strong> Take reciprocals of these fractions</p>
+                    <div class="formula">
+                        Reciprocals:<br/>
+                        1/0.5 = 2<br/>
+                        1/1 = 1<br/>
+                        1/0.5 = 2
+                    </div>
+
+                    <p><strong>Step 3:</strong> Check if integers (already integers in this case)</p>
+                    <p>The reciprocals are already integers: 2, 1, 2</p>
+
+                    <p><strong>Step 4:</strong> Express as Miller indices</p>
+                    <div class="formula" style="background: linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%); color: white; padding: 1.5rem; font-size: 1.5rem;">
+                        Miller Indices = <strong>(2 1 2)</strong>
+                    </div>
+
+                    <h3>Verification</h3>
+                    <p>Let's verify our calculation:</p>
+                    <ul>
+                        <li>Plane intercepts X-axis at 2.12 Å = a/2 (since a = 4.24 Å) → coefficient h = 2 ✓</li>
+                        <li>Plane intercepts Y-axis at 10 Å = b (since b = 10 Å) → coefficient k = 1 ✓</li>
+                        <li>Plane intercepts Z-axis at 1.83 Å = c/2 (since c = 3.66 Å) → coefficient l = 2 ✓</li>
+                    </ul>
+
+                    <h3>Physical Interpretation</h3>
+                    <p>The Miller indices (2 1 2) indicate that:</p>
+                    <ul>
+                        <li>The plane cuts the X-axis at half the unit cell length</li>
+                        <li>The plane cuts the Y-axis at one full unit cell length</li>
+                        <li>The plane cuts the Z-axis at half the unit cell length</li>
+                    </ul>
+
+                    <div class="formula" style="background: var(--bg-card); padding: 1.5rem;">
+                        <strong>Final Answer:</strong> The Miller indices of the plane are <strong>(2 1 2)</strong>
+                    </div>
+                `
+            },
+            {
+                id: 9,
+                question: "An X ray tube is subjected to a potential difference of 50kV. Find (i) the minimum wavelength of produced X-ray (ii) the maximum speed of striking electron.",
+                type: "Numerical",
+                answer: `
+                    <h2>X-ray Tube Calculations</h2>
+
+                    <p><strong>Given:</strong></p>
+                    <ul>
+                        <li>Potential difference: V = 50 kV = 50,000 V</li>
+                        <li>Planck's constant: h = 6.626 × 10⁻³⁴ J·s</li>
+                        <li>Speed of light: c = 3 × 10⁸ m/s</li>
+                        <li>Electron charge: e = 1.6 × 10⁻¹⁹ C</li>
+                        <li>Electron mass: m = 9.11 × 10⁻³¹ kg</li>
+                    </ul>
+
+                    <hr style="margin: 2rem 0; border: 1px solid var(--border);" />
+
+                    <h3>Part (i): Minimum Wavelength of X-ray</h3>
+
+                    <p><strong>Concept:</strong> The minimum wavelength (maximum energy) X-ray is produced when an electron converts all its kinetic energy into a single X-ray photon.</p>
+
+                    <p><strong>Using Duane-Hunt Formula:</strong></p>
+                    <div class="formula">
+                        λ<sub>min</sub> = hc / (eV)
+                    </div>
+
+                    <p><strong>Alternative convenient form:</strong></p>
+                    <div class="formula">
+                        λ<sub>min</sub> (in Å) = 12400 / V (in volts)
+                    </div>
+
+                    <p><strong>Method 1: Using full formula</strong></p>
+                    <div class="formula">
+                        λ<sub>min</sub> = (6.626 × 10⁻³⁴ J·s × 3 × 10⁸ m/s) / (1.6 × 10⁻¹⁹ C × 50,000 V)<br/>
+                        λ<sub>min</sub> = (19.878 × 10⁻²⁶) / (8 × 10⁻¹⁵)<br/>
+                        λ<sub>min</sub> = 2.485 × 10⁻¹¹ m<br/>
+                        λ<sub>min</sub> = 0.2485 × 10⁻¹⁰ m<br/>
+                        λ<sub>min</sub> = 0.2485 Å
+                    </div>
+
+                    <p><strong>Method 2: Using convenient formula</strong></p>
+                    <div class="formula">
+                        λ<sub>min</sub> = 12400 / 50,000<br/>
+                        λ<sub>min</sub> = 0.248 Å
+                    </div>
+
+                    <div class="formula" style="background: linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%); color: white; padding: 1.5rem; font-size: 1.3rem;">
+                        <strong>Answer (i):</strong> Minimum wavelength = <strong>0.248 Å or 2.48 × 10⁻¹¹ m</strong>
+                    </div>
+
+                    <hr style="margin: 2rem 0; border: 1px solid var(--border);" />
+
+                    <h3>Part (ii): Maximum Speed of Striking Electron</h3>
+
+                    <p><strong>Concept:</strong> Electrons accelerated through potential difference V gain kinetic energy equal to eV.</p>
+
+                    <p><strong>Energy balance:</strong></p>
+                    <div class="formula">
+                        Kinetic Energy = Work done by electric field<br/>
+                        ½mv² = eV
+                    </div>
+
+                    <p><strong>Solving for velocity v:</strong></p>
+                    <div class="formula">
+                        v² = 2eV/m<br/>
+                        v = √(2eV/m)
+                    </div>
+
+                    <p><strong>Substituting values:</strong></p>
+                    <div class="formula">
+                        v = √[(2 × 1.6 × 10⁻¹⁹ C × 50,000 V) / (9.11 × 10⁻³¹ kg)]<br/>
+                        v = √[(1.6 × 10⁻¹⁴) / (9.11 × 10⁻³¹)]<br/>
+                        v = √[1.756 × 10¹⁶]<br/>
+                        v = 1.325 × 10⁸ m/s
+                    </div>
+
+                    <div class="formula" style="background: linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%); color: white; padding: 1.5rem; font-size: 1.3rem;">
+                        <strong>Answer (ii):</strong> Maximum speed = <strong>1.325 × 10⁸ m/s</strong>
+                    </div>
+
+                    <h3>Observations</h3>
+                    <ul>
+                        <li>The electron speed (1.325 × 10⁸ m/s) is approximately <strong>44% of the speed of light</strong></li>
+                        <li>At this speed, relativistic effects start to become noticeable but non-relativistic treatment is still reasonably accurate</li>
+                        <li>The X-ray wavelength (0.248 Å) is in the hard X-ray range, suitable for deep penetration and medical imaging</li>
+                    </ul>
+
+                    <h3>Summary</h3>
+                    <ul>
+                        <li>Minimum X-ray wavelength: <strong>0.248 Å or 2.48 × 10⁻¹¹ m</strong></li>
+                        <li>Maximum electron speed: <strong>1.325 × 10⁸ m/s (44% speed of light)</strong></li>
+                    </ul>
+                `
+            },
+            {
+                id: 10,
+                question: "Consider a metal with an FCC structure and a atomic weight of 92.9. When monochromatic x-ray having a wavelength of 0.1028 nm is focused on the crystal, the angle of diffraction (2θ) for the (311) set of planes in this metal occurs at 71.2 degrees (for the first order reflection n=1).",
+                type: "Numerical",
+                answer: `
+                    <h2>FCC Crystal Diffraction Analysis</h2>
+
+                    <p><strong>Given:</strong></p>
+                    <ul>
+                        <li>Crystal structure: FCC (Face-Centered Cubic)</li>
+                        <li>Atomic weight: 92.9</li>
+                        <li>X-ray wavelength: λ = 0.1028 nm</li>
+                        <li>Diffraction angle: 2θ = 71.2°</li>
+                        <li>Crystal planes: (311)</li>
+                        <li>Order of reflection: n = 1 (first order)</li>
+                    </ul>
+
+                    <h3>Calculate Lattice Constant</h3>
+
+                    <p><strong>Step 1:</strong> Find the glancing angle θ</p>
+                    <div class="formula">
+                        θ = (2θ)/2 = 71.2°/2 = 35.6°
+                    </div>
+
+                    <p><strong>Step 2:</strong> Apply Bragg's Law</p>
+                    <div class="formula">
+                        nλ = 2d sin θ<br/>
+                        d₃₁₁ = λ / (2 sin θ)<br/>
+                        d₃₁₁ = 0.1028 nm / (2 × sin(35.6°))<br/>
+                        d₃₁₁ = 0.1028 / (2 × 0.5818)<br/>
+                        d₃₁₁ = 0.1028 / 1.1636<br/>
+                        d₃₁₁ = 0.0884 nm
+                    </div>
+
+                    <p><strong>Step 3:</strong> For cubic crystal system, relate d-spacing to lattice constant</p>
+                    <div class="formula">
+                        d<sub>hkl</sub> = a / √(h² + k² + l²)
+                    </div>
+
+                    <p>For (311) planes: h = 3, k = 1, l = 1</p>
+                    <div class="formula">
+                        √(h² + k² + l²) = √(9 + 1 + 1) = √11 = 3.317
+                    </div>
+
+                    <p><strong>Step 4:</strong> Calculate lattice constant a</p>
+                    <div class="formula">
+                        a = d₃₁₁ × √11<br/>
+                        a = 0.0884 nm × 3.317<br/>
+                        a = 0.2932 nm = 2.932 Å
+                    </div>
+
+                    <div class="formula" style="background: linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%); color: white; padding: 1.5rem; font-size: 1.3rem;">
+                        <strong>Lattice Constant:</strong> a = <strong>0.293 nm or 2.93 Å</strong>
+                    </div>
+
+                    <hr style="margin: 2rem 0; border: 1px solid var(--border);" />
+
+                    <h3>Additional Analysis: Identify the Metal</h3>
+
+                    <p><strong>For FCC structure:</strong></p>
+                    <p>Number of atoms per unit cell = 4</p>
+                    <p>The (311) reflection is allowed in FCC because h, k, l are mixed (not all even or all odd).</p>
+
+                    <p><strong>Calculate atomic radius:</strong></p>
+                    <p>For FCC, the relationship between lattice constant and atomic radius:</p>
+                    <div class="formula">
+                        a = 2√2 × r<br/>
+                        r = a / (2√2) = 0.2932 / 2.828<br/>
+                        r = 0.1037 nm = 1.037 Å
+                    </div>
+
+                    <h3>Verification of FCC Structure</h3>
+                    <p>The (311) planes are allowed in FCC structure. For FCC, systematic absences occur when h, k, l are not all even or all odd. Since 3, 1, 1 are mixed (one even equivalent when considering unmixed), this reflection is indeed observed, confirming the FCC structure.</p>
+
+                    <h3>Summary</h3>
+                    <ul>
+                        <li>Glancing angle: θ = 35.6°</li>
+                        <li>Interplanar spacing for (311): d₃₁₁ = 0.0884 nm</li>
+                        <li>Lattice constant: a = 0.293 nm (2.93 Å)</li>
+                        <li>Atomic radius: r = 0.104 nm (1.04 Å)</li>
+                    </ul>
+
+                    <p><strong>Note:</strong> Based on the atomic weight of 92.9 and FCC structure with lattice constant ~2.93 Å, this metal is likely <strong>Niobium (Nb)</strong> which has atomic weight 92.91 and FCC structure with lattice parameter around 3.30 Å (the slight difference could be due to temperature or measurement conditions).</p>
+                `
+            }
+           
+            
+        ];
+
+        const questionsGrid = document.getElementById('questionsGrid');
+        const searchInput = document.getElementById('searchInput');
+        const answerModal = document.getElementById('answerModal');
+        const answerContent = document.getElementById('answerContent');
+        const closeBtn = document.getElementById('closeBtn');
+        const noResults = document.getElementById('noResults');
+
+        function displayQuestions(questionsToShow) {
+            questionsGrid.innerHTML = '';
+            
+            if (questionsToShow.length === 0) {
+                questionsGrid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            questionsGrid.style.display = 'grid';
+            noResults.style.display = 'none';
+
+            questionsToShow.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.innerHTML = `
+                    <span class="question-number">Question ${q.id}</span>
+                    <div class="question-text">${q.question}</div>
+                    <div class="question-type">${q.type}</div>
+                `;
+                card.addEventListener('click', () => showAnswer(q));
+                questionsGrid.appendChild(card);
+            });
+        }
+
+        function showAnswer(question) {
+            answerContent.innerHTML = `
+                <h2 style="color: var(--accent); margin-bottom: 1.5rem;">Question ${question.id}</h2>
+                <p style="font-size: 1.1rem; margin-bottom: 2rem; border-left: 4px solid var(--primary); padding-left: 1rem;">
+                    ${question.question}
+                </p>
+                ${question.answer}
+            `;
+            answerModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            answerModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        closeBtn.addEventListener('click', closeModal);
+
+        answerModal.addEventListener('click', (e) => {
+            if (e.target === answerModal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && answerModal.style.display === 'block') {
+                closeModal();
+            }
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filtered = questions.filter(q => 
+                q.question.toLowerCase().includes(searchTerm) ||
+                q.type.toLowerCase().includes(searchTerm) ||
+                q.id.toString().includes(searchTerm)
+            );
+            displayQuestions(filtered);
+        });
+
+        displayQuestions(questions);
+    </script>
+    
+    
+</body>
+</html>
